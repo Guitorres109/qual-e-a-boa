@@ -21,7 +21,7 @@ const TEMPO_ENTRE_SORTEIOS = 1000; // Milissegundos: 1000 = 1 segundo
 export default function Home() {
     // Começa com 3 opções para já ter o que sortear
     const [opcoes, setOpcoes] = useState(["Pizza", "Hambúrger", "Sushi"]);
-    // A opção que foi sorteada. Começa vazia ("") porque ainda não sorteou 
+    // A opção que foi sorteada. Começa vazia ("") porque ainda não sorteou
     const [resultado, setResultado] = useState("")
     // O que a pessoa estava digitando no campo. Neste caso começa vazio
     const [textoDigitado, setTextoDigitado] = useState("")
@@ -65,7 +65,6 @@ export default function Home() {
 
     // Função de remover uma opção
     function remover(nomeParaRemover) {
-        // 
         const listaNova = opcoes.filter((opcao) => opcao !== nomeParaRemover)
         setOpcoes(listaNova);
     }
@@ -100,4 +99,25 @@ export default function Home() {
 
         return () => sensor.remove();
     }, [opcoes]);
+
+    // Para a realização do teste npx expo start, depois pressione "a"
+    // https://dontpad.com.br/senai-dsii2sesi
+
+    // Agora vamos começar a desenhar a tela --> jsx
+    // 
+
+    return(<>
+        <ScrollView style={styles.container} contentContainerStyle={styles.conteudo}>
+            <Text style={styles.titulo}>Qual é a boa? 🎲</Text>
+            <Text style={styles.subtitulo}>Monte a lista e chacoalhe o celular</Text>
+        </ScrollView>
+    </>);
 }
+
+const styles = StyleSheet.create({
+    container: { flex: 1, backgroundColor: cores.fundo },
+    conteudo: { padding: 20, paddingTop: 60, paddingBottom: 40 },
+
+    titulo: { fontSize: 30, fontWeight: "bold", color: cores.textoPrincipal },
+    subtitulo: { fontSize: 15, color: cores.textoSecundario, marginTop: 4, marginBottom: 24 },
+});
