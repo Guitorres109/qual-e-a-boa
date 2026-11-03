@@ -110,6 +110,30 @@ export default function Home() {
         <ScrollView style={styles.container} contentContainerStyle={styles.conteudo}>
             <Text style={styles.titulo}>Qual é a boa? 🎲</Text>
             <Text style={styles.subtitulo}>Monte a lista e chacoalhe o celular</Text>
+
+            <View>
+                
+            </View>
+
+            {/* Criando o botão de Sortear */}
+            <Pressable style={styles.botaoSortear} onPress={sortear}>
+                <Text style={styles.textoBotao}>Sortear ao chacoalhar</Text>
+            </Pressable>
+
+            {/* Titulo da Lista */}
+            <Text style={styles.secaoTitulo}>Opções ({opcoes.length})</Text>
+
+            {/* Campo mais botão */}
+            <View style={styles.linhaInput}>
+                <TextInput
+                    style={styles.input}
+                    value={textoDigitado} // O campo SEMPRE mostra o que está guardad
+                    onChange={setTextoDigitado} // A cada letra , guarda o useState
+                    onSubmitEditing={adicionar} // tecla ok/enter do teclado também adiciona
+                    placeholder="Digite uma opção..."
+                    placeholderTextColor={cores.textoSecundario}
+                />
+            </View>
         </ScrollView>
     </>);
 }
