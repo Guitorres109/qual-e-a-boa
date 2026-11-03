@@ -1,7 +1,7 @@
 # Criar APK do APP
 
-npm install -g eas-cli
-npx eas-cli init
+- npm install -g eas-cli
+- npx eas-cli init
 
 ## Android
 ---
