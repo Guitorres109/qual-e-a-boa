@@ -112,7 +112,7 @@ export default function Home() {
             <Text style={styles.subtitulo}>Monte a lista e chacoalhe o celular</Text>
 
             <View>
-                
+
             </View>
 
             {/* Criando o botão de Sortear */}
@@ -134,6 +134,9 @@ export default function Home() {
                     placeholderTextColor={cores.textoSecundario}
                 />
             </View>
+            <Pressable style={styles.botaoAdd} onPress={adicionar}>
+                <Text style={styles.textoBotao}>+</Text>
+            </Pressable>
         </ScrollView>
     </>);
 }
