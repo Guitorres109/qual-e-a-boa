@@ -20,7 +20,7 @@ const TEMPO_ENTRE_SORTEIOS = 1000; // Milissegundos: 1000 = 1 segundo
 
 export default function Home() {
     // Começa com 3 opções para já ter o que sortear
-    const [opcoes, setOpcoes] = useState(["Pizza", "Hambúrger", "Sushi"]);
+    const [opcoes, setOpcoes] = useState(["🍕 Pizza", "🍔 Hambúrger", "🍣 Sushi"]);
     // A opção que foi sorteada. Começa vazia ("") porque ainda não sorteou
     const [resultado, setResultado] = useState("")
     // O que a pessoa estava digitando no campo. Neste caso começa vazio
@@ -50,17 +50,19 @@ export default function Home() {
 
     // Função de adicionar a opção
     function adicionar() {
-        // trim: retira os espaços do fim e do começo
+        // Remove espaços do começo e do final
         const nome = textoDigitado.trim();
 
-        if(nome === "") {
-            return // Retorna nada quando o campo esta vazio
+        // Não permite adicionar opções vazias
+        if (nome === "") {
+            return;
         }
 
-        // Aqui criamos uma nova lista, com tudo o que já tinha + o nome novo
-        const listaNova = [...opcoes, nome];
-        setOpcoes(listaNova);
-        setTextoDigitado(""); // Limpa o campo para igitar a próxima
+        // Adiciona a nova opção à lista
+        setOpcoes([...opcoes, nome]);
+
+        // Limpa o campo de digitação
+        setTextoDigitado("");
     }
 
     // Função de remover uma opção
@@ -111,13 +113,13 @@ export default function Home() {
             <Text style={styles.titulo}>Qual é a boa? 🎲</Text>
             <Text style={styles.subtitulo}>Monte a lista e chacoalhe o celular</Text>
 
-            <View>
-
+            <View style={styles.resultadoCard}>
+                <Text style={styles.resultadosTexto}>{resultado || "📳 Chacoalhe para Sortear"}</Text>
             </View>
 
             {/* Criando o botão de Sortear */}
             <Pressable style={styles.botaoSortear} onPress={sortear}>
-                <Text style={styles.textoBotao}>Sortear ao chacoalhar</Text>
+                <Text style={styles.textoBotao}>Sortear sem chacoalhar</Text>
             </Pressable>
 
             {/* Titulo da Lista */}
@@ -133,18 +135,110 @@ export default function Home() {
                     placeholder="Digite uma opção..."
                     placeholderTextColor={cores.textoSecundario}
                 />
+                <Pressable style={styles.botaoAdd} onPress={adicionar}>
+                    <Text style={styles.textoBotao}>+</Text>
+                </Pressable>
             </View>
-            <Pressable style={styles.botaoAdd} onPress={adicionar}>
-                <Text style={styles.textoBotao}>+</Text>
-            </Pressable>
+            
+            {opcoes.map((opcao) => (
+                <View key={opcao} style={styles.item}>
+                    <Text style={styles.itemTexto}>{opcao}</Text>
+                    <Pressable onPress={() => remover(opcao)}>
+                        <Text style={styles.remover}>X</Text>
+                    </Pressable>
+                </View>
+            ))}
         </ScrollView>
     </>);
 }
 
 const styles = StyleSheet.create({
+    // Tela toda
     container: { flex: 1, backgroundColor: cores.fundo },
     conteudo: { padding: 20, paddingTop: 60, paddingBottom: 40 },
-
     titulo: { fontSize: 30, fontWeight: "bold", color: cores.textoPrincipal },
     subtitulo: { fontSize: 15, color: cores.textoSecundario, marginTop: 4, marginBottom: 24 },
+
+    // Cartão de resultado
+    resultadoCard: {
+        backgroundColor: cores.fundoCard,
+        borderColor: cores.roxo,
+        borderWidth: 2,
+        borderRadius: 16,
+        paddingVertical: 40,
+        paddingHorizontal: 16,
+        alignItems: "center",
+    },
+    resultadosTexto: {
+        fontSize: 32,
+        fontWeight: "bold",
+        color: cores.textoPrincipal,
+        textAlign: "center",
+    },
+
+    //Botao sortear
+
+    botaoSortear: {
+        backgroundColor: cores.roxo,
+        borderRadius: 12,
+        paddingVertical: 14,
+        alignItems: "center",
+        marginTop: 16,
+    },
+    textoBotao: {
+        color: cores.textoPrincipal, 
+        fontSize: 16, 
+        fontWeight: "bold"
+    },
+
+    // Titulo da seção e itens da lista
+    secaoTitulo: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: cores.textoPrincipal,
+        marginBottom: 12,
+        marginTop: 32,
+    },
+    item: {
+        backgroundColor: cores.fundoCard,
+        borderColor: cores.borda,
+        borderWidth: 1,
+        borderRadius: 12,
+        padding: 14,
+        marginBottom: 8,
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    itemTexto: {
+        color: cores.textoPrincipal,
+        fontSize: 16,
+    },
+
+    // Campo de digitar + botão
+
+    linhaInput: {
+        flexDirection: "row",
+        gap: 8,
+        marginBottom: 12,
+    },
+    input: {
+        flex: 1,
+        backgroundColor: cores.fundoCard,
+        borderRadius: 12,
+        paddingHorizontal: 14,
+        fontSize: 16,
+    },
+    botaoAdd: {
+        backgroundColor: cores.verde,
+        borderRadius: 12,
+        width: 50,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    remover: {
+        color: cores.textoSecundario,
+        fontSize: 18,
+    }
+
 });
